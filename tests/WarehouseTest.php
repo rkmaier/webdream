@@ -22,7 +22,7 @@ class WarehouseTest extends TestCase
         $_SESSION = [];
         $this->warehouse = new Warehouse(1, 'Test Warehouse', 'Test Address', 100);
         $this->brand = new Brand(1, 'Test Brand', 5);
-        
+
         $this->tablet = new Tablet(
             1,
             "Test Tablet",
@@ -31,7 +31,7 @@ class WarehouseTest extends TestCase
             "10.9 inch",
             256
         );
-        
+
         $this->book = new Book(
             2,
             "Test Book",
@@ -42,7 +42,7 @@ class WarehouseTest extends TestCase
             300,
             "Fiction"
         );
-        
+
         $this->tv = new TV(
             3,
             "Test TV",
@@ -52,14 +52,14 @@ class WarehouseTest extends TestCase
             55,
             "4K"
         );
-        
+
         $_SESSION['warehouses'] = [$this->warehouse];
     }
 
     public function testWarehouseCreation(): void
     {
         $warehouse = new Warehouse(1, 'New Warehouse', 'Test Address 123', 200);
-        
+
         $this->assertEquals(1, $warehouse->getId());
         $this->assertEquals('New Warehouse', $warehouse->getName());
         $this->assertEquals('Test Address 123', $warehouse->getAddress());
@@ -84,16 +84,16 @@ class WarehouseTest extends TestCase
         $warehouse1 = new Warehouse(1, 'Warehouse 1', 'Address 1', 100);
         $warehouse2 = new Warehouse(2, 'Warehouse 2', 'Address 2', 150);
         $warehouse3 = new Warehouse(3, 'Warehouse 3', 'Address 3', 200);
-        
+
         $_SESSION['warehouses'] = [$warehouse1, $warehouse2, $warehouse3];
-        
+
         $this->assertEquals(450, $warehouse1->getTotalWarehouseCapacity());
         $this->assertCount(3, $_SESSION['warehouses']);
 
         $this->assertEquals('Warehouse 1', $warehouse1->getName());
         $this->assertEquals('Warehouse 2', $warehouse2->getName());
         $this->assertEquals('Warehouse 3', $warehouse3->getName());
-        
+
         $this->assertEquals(100, $warehouse1->getCapacity());
         $this->assertEquals(150, $warehouse2->getCapacity());
         $this->assertEquals(200, $warehouse3->getCapacity());
@@ -106,7 +106,7 @@ class WarehouseTest extends TestCase
         $warehouse->setName('Updated Name')
             ->setAddress('Updated Address')
             ->setCapacity(150);
-        
+
         $this->assertEquals('Updated Name', $warehouse->getName());
         $this->assertEquals('Updated Address', $warehouse->getAddress());
         $this->assertEquals(150, $warehouse->getCapacity());

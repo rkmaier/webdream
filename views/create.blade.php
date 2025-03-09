@@ -9,9 +9,9 @@
 
             <div class="relative">
                 <input name="name"
-                        type="text"
-                        class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-xs"
-                        placeholder="Name"
+                       type="text"
+                       class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-xs"
+                       placeholder="Name"
                 />
             </div>
         </div>
@@ -21,10 +21,10 @@
 
             <div class="relative">
                 <input name="address"
-                        type="text"
-                        min="1"
-                        class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-xs"
-                        placeholder="Address"
+                       type="text"
+                       min="1"
+                       class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-xs"
+                       placeholder="Address"
                 />
             </div>
         </div>
@@ -34,9 +34,9 @@
 
             <div class="relative">
                 <input name="capacity"
-                        type="number"
-                        class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-xs"
-                        placeholder="Capacity"
+                       type="number"
+                       class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-xs"
+                       placeholder="Capacity"
                 />
             </div>
         </div>

@@ -76,9 +76,9 @@ class Warehouse
         return $this;
     }
 
-    public function setStocks(BaseProduct $product, &$quantity)
+    public function setStocks(BaseProduct $product, &$quantity): self
     {
-        $warehouses = $_SESSION['warehouses'];
+        $warehouses = &$_SESSION['warehouses']; // Get reference to session warehouses
         $remainingQuantity = $quantity;
         
         // Check if current warehouse has space
@@ -87,11 +87,19 @@ class Warehouse
             $quantityToStore = min($availableSpace, $remainingQuantity);
             $this->stock[$quantityToStore] = $product;
             $remainingQuantity -= $quantityToStore;
+            
+            // Update current warehouse in session
+            foreach ($warehouses as $key => $warehouse) {
+                if ($warehouse->getId() === $this->getId()) {
+                    $warehouses[$key] = $this;
+                    break;
+                }
+            }
         }
         
         // If we still have items to store and total capacity is sufficient
         if ($remainingQuantity > 0 && $this->getTotalWarehouseCapacity() >= $this->getTotalWarehouseStocksCount() + $remainingQuantity) {
-            foreach ($warehouses as $warehouse) {
+            foreach ($warehouses as $key => $warehouse) {
                 if ($warehouse->getId() === $this->getId()) {
                     continue; // Skip current warehouse as we already processed it
                 }
@@ -104,6 +112,9 @@ class Warehouse
                 $quantityToStore = min($availableSpace, $remainingQuantity);
                 $warehouse->stock[$quantityToStore] = $product;
                 $remainingQuantity -= $quantityToStore;
+                
+                // Update warehouse in session
+                $warehouses[$key] = $warehouse;
                 
                 if ($remainingQuantity <= 0) {
                     break;
@@ -151,11 +162,10 @@ class Warehouse
         return $totalCapacity;
     }
 
-    public function removeStocks(BaseProduct $product, &$quantity)
+    public function removeStocks(BaseProduct $product, &$quantity): self
     {
-        $warehouses = $_SESSION['warehouses'];
+        $warehouses = &$_SESSION['warehouses'];
         $remainingToRemove = $quantity;
-
 
         foreach ($this->stock as $stockQuantity => $stockProduct) {
             if ($stockProduct->getId() === $product->getId()) {
@@ -167,16 +177,30 @@ class Warehouse
                         $this->stock[$stockQuantity - $remainingToRemove] = $product;
                     }
                     $remainingToRemove = 0;
+
+                    foreach ($warehouses as $key => $warehouse) {
+                        if ($warehouse->getId() === $this->getId()) {
+                            $warehouses[$key] = $this;
+                            break;
+                        }
+                    }
                     break;
                 } else {
                     unset($this->stock[$stockQuantity]);
                     $remainingToRemove -= $stockQuantity;
+
+                    foreach ($warehouses as $key => $warehouse) {
+                        if ($warehouse->getId() === $this->getId()) {
+                            $warehouses[$key] = $this;
+                            break;
+                        }
+                    }
                 }
             }
         }
 
         if ($remainingToRemove > 0) {
-            foreach ($warehouses as $warehouse) {
+            foreach ($warehouses as $key => $warehouse) {
                 if ($warehouse->getId() === $this->getId()) {
                     continue;
                 }
@@ -184,19 +208,23 @@ class Warehouse
                 foreach ($warehouse->getStocks() as $stockQuantity => $stockProduct) {
                     if ($stockProduct->getId() === $product->getId()) {
                         if ($stockQuantity >= $remainingToRemove) {
-
                             if ($stockQuantity === $remainingToRemove) {
                                 unset($warehouse->stock[$stockQuantity]);
                             } else {
-
                                 unset($warehouse->stock[$stockQuantity]);
                                 $warehouse->stock[$stockQuantity - $remainingToRemove] = $product;
                             }
                             $remainingToRemove = 0;
+
+
+                            $warehouses[$key] = $warehouse;
                             break 2;
                         } else {
                             unset($warehouse->stock[$stockQuantity]);
                             $remainingToRemove -= $stockQuantity;
+
+
+                            $warehouses[$key] = $warehouse;
                         }
                     }
                 }

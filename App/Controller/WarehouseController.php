@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Model\Warehouse;
@@ -7,8 +8,8 @@ class WarehouseController extends MainController
 {
     public function create()
     {
-         echo $this->blade->setView('create')
-        ->run();
+        echo $this->blade->setView('create')
+            ->run();
     }
 
     public function list()
@@ -31,9 +32,10 @@ class WarehouseController extends MainController
     public function save()
     {
         $data = $_POST;
-        $warehouses =  isset($_SESSION['warehouses']) ? $_SESSION['warehouses'] : [];
-        $warehouse = new Warehouse(count($warehouses)+1, $data['name'], $data['address'], $data['capacity']);
-        $_SESSION['warehouses'][] = $warehouse;
+        $warehouses = isset($_SESSION['warehouses']) ? $_SESSION['warehouses'] : [];
+        $newWarehouse = new Warehouse(count($warehouses) + 1, $data['name'], $data['address'], $data['capacity']);
+        $warehouses[] = $newWarehouse;
+        $_SESSION['warehouses'] = $warehouses;
         header('Location: /');
         exit();
     }

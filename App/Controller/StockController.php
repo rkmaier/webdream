@@ -7,8 +7,8 @@ class StockController extends MainController
 
     public function addStock()
     {
-        $warehouses = $_SESSION['warehouses'] ?? [];
-        $products = $_SESSION['products'] ?? [];
+            $warehouses = $_SESSION['warehouses'] ?? [];
+            $products = $_SESSION['products'] ?? [];
 
         echo $this->blade
             ->share(compact('warehouses', 'products'))
@@ -32,7 +32,7 @@ class StockController extends MainController
     public function saveStock()
     {
         $data = $_POST;
-        $warehouses  = ($_SESSION['warehouses']);
+        $warehouses = ($_SESSION['warehouses']);
 
         $selectedWarehouse = collect($warehouses)->filter(function ($value, int $key) use ($data) {
             return $value->getId() == $data['warehouse'];
@@ -42,13 +42,13 @@ class StockController extends MainController
             return $value->getId() == $data['product'];
         })->first();
 
-        if($data['type'] == 'remove') {
+        if ($data['type'] == 'remove') {
             $selectedWarehouse->removeStocks($selectedProduct, $data['stock']);
-        }else{
+        } else {
             $res = $selectedWarehouse->setStocks($selectedProduct, $data['stock']);
         }
 
-        if(is_array($res)) {
+        if (is_array($res)) {
             $msg = $res[1];
             $type = 'error';
         }

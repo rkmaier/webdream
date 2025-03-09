@@ -38,24 +38,23 @@
                 Remove Stock
             </a>
             @foreach($warehouses as $warehouse)
-            <tr>
-                <td class="px-4 py-2 font-medium whitespace-nowrap text-gray-900">{{ $warehouse->getId() }}</td>
-                <td class="px-4 py-2 font-medium whitespace-nowrap text-gray-900">{{ $warehouse->getName() }}</td>
-                <td class="px-4 py-2 whitespace-nowrap text-gray-700">{{ $warehouse->getAddress() }}</td>
-                <td class="px-4 py-2 whitespace-nowrap text-gray-700">{{ $warehouse->getCapacity() }}</td>
-                <td class="px-4 py-2 whitespace-nowrap text-gray-700">{{ $warehouse->getStocksCount() }}</td>
+                <tr>
+                    <td class="px-4 py-2 font-medium whitespace-nowrap text-gray-900">{{ $warehouse->getId() }}</td>
+                    <td class="px-4 py-2 font-medium whitespace-nowrap text-gray-900">{{ $warehouse->getName() }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-gray-700">{{ $warehouse->getAddress() }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-gray-700">{{ $warehouse->getCapacity() }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-gray-700">{{ $warehouse->getStocksCount() }}</td>
 
-                <td class="px-4 py-2 whitespace-nowrap">
-                    <a
-                            href="/view?id={{ $warehouse->getId() }}"
-                            class="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                    >
-                        View
-                    </a>
-                </td>
-            </tr>
+                    <td class="px-4 py-2 whitespace-nowrap">
+                        <a
+                                href="/view?id={{ $warehouse->getId() }}"
+                                class="inline-block rounded-sm bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+                        >
+                            View
+                        </a>
+                    </td>
+                </tr>
             @endforeach
-
 
 
             </tbody>

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model;
 class TV extends BaseProduct
 {
@@ -17,6 +18,7 @@ class TV extends BaseProduct
         $this->setScreenSize($screenSize);
         $this->setResolution($resolution);
     }
+
     /**
      * @return mixed
      */

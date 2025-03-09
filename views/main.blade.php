@@ -10,16 +10,16 @@
     <title>Warehouse Management</title>
     @yield('styles')
 </head>
- <body>
- <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-     <div class="mx-auto max-w-lg text-center">
-         <h1 class="text-2xl font-bold sm:text-3xl"><a href="/">Manage Warehouses</a></h1>
+<body>
+<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-lg text-center">
+        <h1 class="text-2xl font-bold sm:text-3xl"><a href="/">Manage Warehouses</a></h1>
 
-         <p class="mt-4 text-gray-500">
-             @yield('pagetitle')
-         </p>
-     </div>
+        <p class="mt-4 text-gray-500">
+            @yield('pagetitle')
+        </p>
+    </div>
     @yield('content')
- </div>
-    @yield('scripts')
- </body>
+</div>
+@yield('scripts')
+</body>
