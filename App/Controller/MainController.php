@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Model\BaseProduct;
 use App\Model\Book;
 use App\Model\Brand;
 use App\Model\Tablet;
@@ -50,7 +49,7 @@ class MainController
         if (!isset($_SESSION['products'])) {
             $brand1 = $_SESSION['brands'][0];
             $brand2 = $_SESSION['brands'][1];
-            
+
             $_SESSION['products'] = [
                 new Tablet(1, "Tablet", $brand1, 10, "1280x720", 500),
                 new Book(2, "Book", $brand1, 10, "Author", "1234567890", 100, "Genre"),

@@ -9,8 +9,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
 use App\Controller\StockController;
 use App\Controller\WarehouseController;
-use FastRoute\RouteCollector;
 use FastRoute\Dispatcher;
+use FastRoute\RouteCollector;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/', [WarehouseController::class, 'list']);

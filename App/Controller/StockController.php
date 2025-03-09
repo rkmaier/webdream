@@ -7,8 +7,8 @@ class StockController extends MainController
 
     public function addStock()
     {
-            $warehouses = $_SESSION['warehouses'] ?? [];
-            $products = $_SESSION['products'] ?? [];
+        $warehouses = $_SESSION['warehouses'] ?? [];
+        $products = $_SESSION['products'] ?? [];
 
         echo $this->blade
             ->share(compact('warehouses', 'products'))

@@ -4,7 +4,6 @@ namespace App\Model;
 abstract class BaseProduct
 {
     private int $id;
-
     private string $name;
     private int $price;
     private Brand $brand;
