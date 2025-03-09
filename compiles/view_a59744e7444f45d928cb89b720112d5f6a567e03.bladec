@@ -1,0 +1,33 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('pagetitle'); ?>
+ View Warehouse
+<?php $this->stopSection(); ?>
+<?php $this->startSection('content'); ?>
+ <div class="overflow-x-auto mt-20">
+ <?php $__currentLoopData = $warehouse->getStocks(); $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $key => $stock): $loop = $this->incrementLoopIndices();  ?>
+ <article class="rounded-lg border border-gray-100 bg-white p-6 my-12">
+ <div>
+ <p class="text-3xl text-gray-900"><?php echo \htmlentities($stock->getName()??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+
+ <p class="text-2xs font-medium text-gray-900"><span>Quantity: </span> <?php echo \htmlentities($key??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ <p class="text-2xs underline font-medium text-gray-900"><span>Product details: </span></p>
+ <div class="mt-2 space-y-1">
+ <?php if($stock instanceof \App\Model\Tablet): ?>
+ <p class="text-sm text-gray-700"><span class="font-medium">Screen Size:</span> <?php echo \htmlentities($stock->getScreenSize()??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p class="text-sm text-gray-700"><span class="font-medium">Storage:</span> <?php echo \htmlentities($stock->getStorageCapacity()??'', ENT_QUOTES, 'UTF-8', false); ?> GB</p>
+ <?php elseif($stock instanceof \App\Model\Book): ?>
+ <p class="text-sm text-gray-700"><span class="font-medium">Author:</span> <?php echo \htmlentities($stock->getAuthor()??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p class="text-sm text-gray-700"><span class="font-medium">ISBN:</span> <?php echo \htmlentities($stock->getIsbn()??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p class="text-sm text-gray-700"><span class="font-medium">Pages:</span> <?php echo \htmlentities($stock->getPages()??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p class="text-sm text-gray-700"><span class="font-medium">Genre:</span> <?php echo \htmlentities($stock->getGenre()??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <?php endif; ?>
+ <p class="text-sm text-gray-700"><span class="font-medium">Brand:</span> <?php echo \htmlentities($stock->getBrand()->getName()??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p class="text-sm text-gray-700"><span class="font-medium">Price:</span> $<?php echo \htmlentities($stock->getPrice()??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ </article>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </div>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('main'); } ?>
