@@ -19,6 +19,7 @@ class Warehouse
     }
 
     /**
+     * @param int $id
      * @param string $name
      * @param string $address
      * @param int $capacity
@@ -76,19 +77,23 @@ class Warehouse
         return $this;
     }
 
-    public function setStocks(BaseProduct $product, &$quantity): self
+    public function setStocks(BaseProduct $product, &$quantity)
     {
-        $warehouses = &$_SESSION['warehouses']; // Get reference to session warehouses
+        $warehouses = &$_SESSION['warehouses'];
         $remainingQuantity = $quantity;
-        
-        // Check if current warehouse has space
+        $show = 'error';
+
+        if ($quantity > $this->getTotalWarehouseCapacity()) {
+            return ["error", 'Not enough space in the warehouse'];
+        }
+
+
         $availableSpace = $this->getCapacity() - $this->getStocksCount();
         if ($availableSpace > 0) {
             $quantityToStore = min($availableSpace, $remainingQuantity);
             $this->stock[$quantityToStore] = $product;
             $remainingQuantity -= $quantityToStore;
-            
-            // Update current warehouse in session
+
             foreach ($warehouses as $key => $warehouse) {
                 if ($warehouse->getId() === $this->getId()) {
                     $warehouses[$key] = $this;
@@ -96,33 +101,31 @@ class Warehouse
                 }
             }
         }
-        
-        // If we still have items to store and total capacity is sufficient
+
         if ($remainingQuantity > 0 && $this->getTotalWarehouseCapacity() >= $this->getTotalWarehouseStocksCount() + $remainingQuantity) {
             foreach ($warehouses as $key => $warehouse) {
                 if ($warehouse->getId() === $this->getId()) {
-                    continue; // Skip current warehouse as we already processed it
+                    continue;
                 }
-                
+
                 $availableSpace = $warehouse->getCapacity() - $warehouse->getStocksCount();
                 if ($availableSpace <= 0) {
-                    continue; // Skip full warehouses
+                    continue;
                 }
-                
+
                 $quantityToStore = min($availableSpace, $remainingQuantity);
                 $warehouse->stock[$quantityToStore] = $product;
                 $remainingQuantity -= $quantityToStore;
-                
-                // Update warehouse in session
+
                 $warehouses[$key] = $warehouse;
-                
+
                 if ($remainingQuantity <= 0) {
                     break;
                 }
             }
         }
-        
-        // Update the reference quantity to what's left
+
+
         $quantity = $remainingQuantity;
         return $this;
     }
@@ -164,6 +167,7 @@ class Warehouse
 
     public function removeStocks(BaseProduct $product, &$quantity): self
     {
+
         $warehouses = &$_SESSION['warehouses'];
         $remainingToRemove = $quantity;
 
@@ -230,6 +234,7 @@ class Warehouse
                 }
             }
         }
+
 
         $quantity = $remainingToRemove;
         return $this;
